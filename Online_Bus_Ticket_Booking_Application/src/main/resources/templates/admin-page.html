@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+              background-image: url('https://t4.ftcdn.net/jpg/03/60/29/63/240_F_360296349_2pm4h5a8NeCIVnBgFZip8Pt7WbEXdYeV.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: ;
+
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 1.5em;
+            color: #0a0a0a;
+
+        }
+
+        .logout-button {
+            background-color: #f44336;
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.2s;
+        }
+
+        .logout-button:hover {
+            background-color: #d32f2f;
+            transform: scale(1.05);
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #000700;
+            font-size: 1em;
+            padding: 8px 16px;
+            border: 1px solid #0553c7;
+            border-radius: 4px;
+            transition: background-color 0.2s, color 0.2s;
+        }
+
+        nav ul li a:hover {
+            background-color: #370eca;
+            color: white;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #d3cece;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .container h2 {
+            color: #000c01;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="header">
+    <h1>ADMIN Dashboard</h1>
+    <span sec:authorize="isAuthenticated">
+    <a th:href="@{/logout}">
+      <button class="logout-button">Logout</button>
+    </a>
+  </span>
+</div>
+<div class="container">
+    <h2>Welcome, <span th:text="${passenger.fullName}"></span></h2>
+    <nav>
+        <ul>
+            <li><a href="/addBus">Add Bus</a></li>
+            <li><a href="/viewAllBuses">View Bus</a></li>
+            <li><a href="/findBusById">View Bus By ID</a></li>
+        </ul>
+    </nav>
+</div>
+</body>
+</html>

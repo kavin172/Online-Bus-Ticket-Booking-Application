@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Available Buses</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('https://static.vecteezy.com/system/resources/thumbnails/037/470/429/small_2x/ai-generated-touristic-coach-bus-on-highway-road-intercity-regional-domestic-transportation-driving-urban-modern-tour-traveling-travel-journey-ride-moving-transport-concept-public-comfortable-photo.jpg');
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 {
+            width: 100%;
+            text-align: center;
+            color: rgb(3, 0, 0);
+            padding: 10px 0;
+            margin: 0;
+        }
+        table {
+            width: 90%;
+            max-width: 1200px;
+            margin: 20px;
+            border-collapse: collapse;
+            background: rgba(255, 255, 255, 0.8);
+            color: black;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+        th {
+            background-color: rgba(255, 255, 255, 0.7);
+            color: rgb(5, 0, 0);
+        }
+        input[type="submit"] {
+            background-color: rgb(20, 4, 252);
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        input[type="submit"]:hover {
+            background: linear-gradient(to right, rgba(0, 0, 255, 0.7), rgba(0, 128, 255, 0.7));
+        }
+        .home-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background: rgb(20, 4, 252);
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background 0.3s ease;
+            margin-top: 20px;
+        }
+        .home-button:hover {
+            background: linear-gradient(to right, rgba(0, 0, 255, 0.7), rgba(0, 128, 255, 0.7));
+        }
+    </style>
+</head>
+<body>
+<h1>Available Buses</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Bus Name</th>
+        <th>From</th>
+        <th>To</th>
+        <th>Date of Journey</th>
+        <th>Departure Time</th>
+        <th>Arrival Time</th>
+        <th>Ticket Fare</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="bus : ${buses}">
+        <td th:text="${bus.busName}"></td>
+        <td th:text="${bus.from}"></td>
+        <td th:text="${bus.to}"></td>
+        <td th:text="${bus.checkingDate}"></td>
+        <td th:text="${bus.departureTime}"></td>
+        <td th:text="${bus.arrivalTime}"></td>
+        <td th:text="${bus.ticketFar}"></td>
+        <td>
+            <form th:action="@{/bookBus/{busId}(busId=${bus.busId})}" method="get">
+                <input type="submit" value="Book Now"/>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<a href="/user" class="home-button">Back to Home</a>
+</body>
+</html>

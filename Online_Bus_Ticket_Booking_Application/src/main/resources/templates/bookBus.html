@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Book Bus</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('https://static.vecteezy.com/system/resources/thumbnails/037/470/429/small_2x/ai-generated-touristic-coach-bus-on-highway-road-intercity-regional-domestic-transportation-driving-urban-modern-tour-traveling-travel-journey-ride-moving-transport-concept-public-comfortable-photo.jpg');
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 {
+            width: 100%;
+            text-align: center;
+            color: black;
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 10px 0;
+            margin: 0;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            width: 90%;
+            max-width: 1200px;
+            padding: 20px;
+            align-items: center;
+        }
+        .bus-details, .booking-form {
+            background: rgba(255, 255, 255, 0.8);
+            color: black;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin: 10px;
+            border-radius: 8px;
+            width: 100%;
+        }
+        .bus-details {
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"], input[type="number"], select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: rgb(3, 61, 253);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: linear-gradient(to right, rgba(0, 0, 255, 0.7), rgba(0, 128, 255, 0.7));
+        }
+        .home-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background: rgb(3, 61, 253);
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background 0.3s ease;
+        }
+        .home-button:hover {
+            background: linear-gradient(to right, rgba(0, 0, 255, 0.7), rgba(0, 128, 255, 0.7));
+        }
+        .center {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            margin-top: 20px;
+        }
+        @media (max-width: 768px) {
+            .bus-details, .booking-form {
+                width: 100%;
+            }
+        }
+    </style>
+    <script>
+        let passengerCount = 1;
+
+        function addPassenger() {
+            passengerCount++;
+            var container = document.getElementById("passengerDetails");
+
+            var passengerDiv = document.createElement("div");
+            passengerDiv.innerHTML = `
+                <h3>Passenger ${passengerCount}</h3>
+                <div class="form-group">
+                    <label for="travelPassengerName_${passengerCount}">Passenger Name:</label>
+                    <input type="text" id="travelPassengerName_${passengerCount}" name="travelPassengerName" />
+                </div>
+                <div class="form-group">
+                    <label for="travelPassengerGender_${passengerCount}">Passenger Gender:</label>
+                    <select id="travelPassengerGender_${passengerCount}" name="travelPassengerGender">
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="travelPassengerAge_${passengerCount}">Passenger Age:</label>
+                    <input type="number" id="travelPassengerAge_${passengerCount}" name="travelPassengerAge" />
+                </div>
+                <div class="form-group">
+                    <label for="seatPreference_${passengerCount}">Seat Preference:</label>
+                    <select id="seatPreference_${passengerCount}" name="seatPreference">
+                        <option value="Window">Window</option>
+                        <option value="Aisle">Aisle</option>
+                    </select>
+                </div>
+            `;
+            container.appendChild(passengerDiv);
+        }
+    </script>
+</head>
+<body>
+<h1>Book Bus</h1>
+<div class="container">
+    <div class="bus-details">
+        <p>Bus Name: <span th:text="${bus.busName}"></span></p>
+        <p>From: <span th:text="${bus.from}"></span></p>
+        <p>To: <span th:text="${bus.to}"></span></p>
+        <p>Date of Journey: <span th:text="${bus.checkingDate}"></span></p>
+        <p>Departure Time: <span th:text="${bus.departureTime}"></span></p>
+        <p>Arrival Time: <span th:text="${bus.arrivalTime}"></span></p>
+        <p>Ticket Fare: <span th:text="${bus.ticketFar}"></span></p>
+        <p>Thank you for choosing <span th:text="${bus.busName}"></span>!</p>
+    </div>
+    <div class="booking-form">
+        <form action="/saveBooking" method="post">
+            <input type="hidden" name="_csrf.parameterName" value="_csrf.token" /> <!-- CSRF token -->
+            <input type="hidden" name="busId" th:value="${bus.busId}" />
+            <input type="hidden" name="passengerId" th:value="${passengers.passengerId}" />
+
+            <div class="form-group">
+                <label for="noOfPassengers">No of Passengers</label>
+                <input type="text" id="noOfPassengers" name="noOfPassengers" />
+            </div>
+
+            <div id="passengerDetails">
+                <!-- Main Passenger -->
+                <h3>Main Passenger</h3>
+                <div class="form-group">
+                    <label for="travelPassengerName_1">Passenger Name</label>
+                    <input type="text" id="travelPassengerName_1" name="travelPassengerName" />
+                </div>
+                <div class="form-group">
+                    <label for="travelPassengerGender_1">Passenger Gender</label>
+                    <select id="travelPassengerGender_1" name="travelPassengerGender">
+                        <option value="Select">Select Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="travelPassengerAge_1">Passenger Age</label>
+                    <input type="number" id="travelPassengerAge_1" name="travelPassengerAge" />
+                </div>
+                <div class="form-group">
+                    <label for="seatPreference_1">Seat Preference</label>
+                    <select id="seatPreference_1" name="seatPreference">
+                        <option value="Select">Select Seat Preference</option>
+                        <option value="Window">Window</option>
+                        <option value="Aisle">Aisle</option>
+                        <option value="LowerBerth">Lower Berth</option>
+                        <option value="UpperBerth">Upper Berth</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Add Passenger Button -->
+            <button type="button" onclick="addPassenger()">Add Passenger</button>
+
+            <!-- Payment Mode -->
+            <div class="form-group">
+                <label for="paymentMode">Payment Mode</label>
+                <select id="paymentMode" name="paymentMode">
+                    <option value="Credit Card">Credit Card</option>
+                    <option value="Debit Card">Debit Card</option>
+                    <option value="Online">UPI</option>
+                </select>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit">Book</button>
+        </form>
+    </div>
+</div>
+<div class="center">
+    <a href="/user" class="home-button">Back to Home</a>
+</div>
+</body>
+</html>

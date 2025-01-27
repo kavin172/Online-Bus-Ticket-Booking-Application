@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-image: url('https://static.vecteezy.com/system/resources/thumbnails/037/470/429/small_2x/ai-generated-touristic-coach-bus-on-highway-road-intercity-regional-domestic-transportation-driving-urban-modern-tour-traveling-travel-journey-ride-moving-transport-concept-public-comfortable-photo.jpg');
+            background-size: cover;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+        .header {
+            width: 100%;
+
+            color: rgb(15, 1, 1);
+            text-align: center;
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .container {
+          max-width: 800px;
+          margin: 50px auto ;
+          padding: 80px;
+          background-color: rgba(255, 255, 255, 0.9);
+          border-radius: 10px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+          color: black;
+          position: relative;
+          text-align: left;
+
+        }
+        h2 {
+            color: #282c34;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: left;
+            margin-bottom: 20px;
+        }
+        label {
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+        input[type="text"],
+        input[type="date"],
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            color: #333;
+            transition: all 0.3s;
+        }
+        input[type="text"]:hover,
+        input[type="date"]:hover {
+            border-color: #aaa;
+        }
+        input[type="text"]:focus,
+        input[type="date"]:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+        button {
+            border: none;
+            border-radius: 5px;
+            background: #007bff;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+
+        .view-bookings {
+            position: absolute;
+            right: 160px;
+            top: 30px;
+        }
+
+        .logout {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+        }
+        .logout a  {
+            padding: 10px 15px;
+            border-radius: 5px;
+            background: #f00808;
+            color: #fff;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        .view-bookings a {
+            padding: 10px 15px;
+            border-radius: 5px;
+            background: #0813f0;
+            color: #fff;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        .logout a:hover, .view-bookings a:hover {
+            background: #0813f0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>Welcome to Universal Travels</h1>
+    <a class="btn  text primary md inactive button" id="bus-link" style="display: flex; flex-direction: row; place-content: center; place-items: center; column-gap: 0.25rem;"><span><svg xmlns="http://www.w3.org/2000/svg" width="1.5rem" height="1.5rem" fill="none" viewBox="0 0 23 22"><path fill="currentColor" fill-rule="evenodd" d="M3.552.065c-.74.18-1.384.81-1.643 1.608-.068.21-.08.488-.101 2.509l-.024 2.272-.27.097A2.378 2.378 0 0 0 .066 8.144C.019 8.324 0 8.61 0 9.138c0 .91.053 1.096.41 1.453.297.298.583.409 1.05.409h.341l.013 3.643.013 3.642.1.278c.147.407.293.634.61.948.281.278.7.529.976.584l.13.026.02.417c.031.656.265 1.056.777 1.326l.223.118 1.228.013c1.17.012 1.24.008 1.476-.08.17-.064.319-.164.476-.321.298-.299.41-.584.41-1.054v-.342h5.5v.342c0 .47.112.756.41 1.054.157.157.306.257.476.321.237.088.306.092 1.476.08l1.228-.013.223-.118c.512-.27.746-.67.778-1.326l.02-.418.129-.025c.276-.055.695-.306.975-.584.318-.314.465-.541.611-.948l.1-.278.013-3.642.013-3.643h.34c.467 0 .754-.111 1.051-.408a1.34 1.34 0 0 0 .305-.437 1.34 1.34 0 0 1 .112-.249c.048-.055.047-1.625-.002-1.596-.02.013-.049-.05-.063-.14-.045-.278-.32-.77-.58-1.035-.301-.306-.529-.458-.876-.584l-.27-.097-.024-2.272c-.026-2.5-.021-2.45-.308-2.993-.17-.319-.606-.755-.928-.927-.523-.279-.079-.264-7.98-.26-6.046.002-7.218.012-7.43.063Zm1.964 1.86a1.35 1.35 0 0 0-.548 2.198c.102.109.278.245.392.303l.206.105H16.44l.207-.105a1.73 1.73 0 0 0 .39-.303c.62-.662.42-1.736-.396-2.137l-.244-.12-5.33-.009c-5.028-.01-5.342-.005-5.551.067Zm-.73 3.618c-.397.08-.742.333-.942.694l-.126.229-.012 2.627c-.012 2.563-.01 2.634.076 2.864.118.316.446.644.759.761.23.086.308.087 6.462.087s6.232 0 6.462-.087c.314-.117.64-.445.759-.76.086-.231.088-.302.076-2.865l-.012-2.627-.126-.229c-.154-.278-.352-.457-.667-.605l-.238-.112-6.147-.006c-3.38-.004-6.226.01-6.324.029ZM.018 9.13c0 .45.006.627.014.396.008-.232.008-.6 0-.817-.008-.217-.014-.028-.014.421Zm5.505 5.623a1.418 1.418 0 0 0-.837.828c-.318.843.279 1.749 1.193 1.812a1.374 1.374 0 0 0 1.3-.75c.149-.294.168-.763.044-1.093a1.434 1.434 0 0 0-.76-.766c-.263-.099-.728-.114-.94-.03Zm10.009.03c-.304.12-.632.456-.75.767-.123.33-.104.799.045 1.094.245.484.769.786 1.3.749 1.148-.08 1.692-1.432.91-2.267-.274-.293-.524-.404-.94-.418-.265-.009-.396.009-.565.076Z" clip-rule="evenodd"></path></svg></span><span>Buses</span></a>
+</div>
+<div class="logout" sec:authorize="isAuthenticated">
+    <a th:href="@{/logout}">Logout</a>
+</div>
+<div class="view-bookings">
+    <a href="/bookings">View Bookings</a>
+</div>
+<div class="container">
+    <h2>Welcome, <span th:text="${passenger.fullName}"></span></h2>
+    <form action="/passengerHome" method="get">
+        <label for="from">From</label>
+        <input type="text" id="from" name="from" required>
+        <label for="to">To</label>
+        <input type="text" id="to" name="to" required>
+        <label for="date">Date</label>
+        <input type="date" id="date" name="date" required>
+        <br>
+        <button type="submit">Search Bus</button>
+    </form>
+</div>
+</body>
+</html>

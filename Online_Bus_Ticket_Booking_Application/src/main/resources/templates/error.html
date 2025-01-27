@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Error</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            color: #333;
+            background-image: url('https://static.vecteezy.com/system/resources/thumbnails/037/470/429/small_2x/ai-generated-touristic-coach-bus-on-highway-road-intercity-regional-domestic-transportation-driving-urban-modern-tour-traveling-travel-journey-ride-moving-transport-concept-public-comfortable-photo.jpg');
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        h1 {
+            font-size: 3em;
+            color: #FF0000;
+        }
+        p {
+            text-align: center;
+            color: #080000;
+            line-height: 1.6;
+            margin: 10px 0;
+        }
+        a {
+            display: inline-block;
+            width: auto;
+            padding: 10px 20px;
+            margin: 20px 0;
+            text-align: center;
+            background-color: #1323fd;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        a:hover {
+            background-color: #FA7070;
+        }
+    </style>
+</head>
+<body>
+<h1>Error</h1>
+<p th:text="${error}"></p>
+<a href="/user">Go back to Home</a>
+<p>Try Again Later</p>
+</body>
+</html>
